@@ -9,6 +9,8 @@
   <h2>Aliens Abducted Me - Report an Abduction</h2>
 
 <?php
+
+  require './PHPMailer-FE_v4.11/_lib/class.phpmailer.php';
   $name = $_POST['firstname'] . ' ' . $_POST['lastname'];
   $when_it_happened = $_POST['whenithappened'];
   $how_long = $_POST['howlong'];
@@ -27,6 +29,28 @@
     "What they did: $what_they_did\n" .
     "Fang spotted: $fang_spotted\n" .
     "Other comments: $other";
+
+  $mail = new PHPMailer(true);
+    //Server settings
+    $mail -> SMTPDebug=1;
+    $mail -> IsSMTP();
+    $mail -> Host='smtp.gmail.com';
+    $mail -> SMTPAuth=true;
+    $mail -> Username= 'tonysunyueran@gmail.com';
+    $mail -> Password= 'bierewo199274';
+    $mail -> SMTPSecure= 'tls';
+    $mail -> Port=587;
+    $mail -> CharSet='UF-8';
+
+
+    $mail -> setFrom($email);
+    $mail -> addReplyTo($email);
+    $mail -> addAddress($email);
+    $mail ->Subject=$subject;
+    $mail-> isHTML(true);
+    $mail -> Body=$msg;
+    $mail -> send();
+  
   mail($to, $subject, $msg, 'From:' . $email);
 
   echo 'Thanks for submitting the form.<br />';
