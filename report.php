@@ -9,7 +9,10 @@
   <h2>Aliens Abducted Me - Report an Abduction</h2>
 
 <?php
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
 
+  require 'vendor/autoload.php';
   
   $name = $_POST['firstname'] . ' ' . $_POST['lastname'];
   $when_it_happened = $_POST['whenithappened'];
@@ -32,7 +35,7 @@
 
   $mail = new PHPMailer(true);
     //Server settings
-    $mail -> SMTPDebug=1;
+    $mail -> SMTPDebug=2;
     $mail -> IsSMTP();
     $mail -> Host='smtp.gmail.com';
     $mail -> SMTPAuth=true;
@@ -40,18 +43,18 @@
     $mail -> Password= 'bierewo199274';
     $mail -> SMTPSecure= 'tls';
     $mail -> Port=587;
-    $mail -> CharSet='UF-8';
+    
 
 
     $mail -> setFrom($email);
     $mail -> addReplyTo($email);
     $mail -> addAddress($email);
     $mail ->Subject=$subject;
-    $mail-> isHTML(true);
+    
     $mail -> Body=$msg;
     $mail -> send();
   
-  mail($to, $subject, $msg, 'From:' . $email);
+ // mail($to, $subject, $msg, 'From:' . $email);
 
   echo 'Thanks for submitting the form.<br />';
   echo 'You were abducted ' . $when_it_happened;
