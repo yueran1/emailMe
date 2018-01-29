@@ -9,11 +9,15 @@
   <h2>Aliens Abducted Me - Report an Abduction</h2>
 
 <?php
+
   use PHPMailer\PHPMailer\PHPMailer;
   use PHPMailer\PHPMailer\Exception;
+  //require 'PHPMailer-FE_v4.11/_lib/class.phpmailer.php';
 
-  require 'vendor/autoload.php';
-  
+  require 'PHPMailer/src/Exception.php';
+  require 'PHPMailer/src/PHPMailer.php';
+  require 'PHPMailer/src/SMTP.php';
+  //require '../vendor/autoload.php';
   $name = $_POST['firstname'] . ' ' . $_POST['lastname'];
   $when_it_happened = $_POST['whenithappened'];
   $how_long = $_POST['howlong'];
@@ -24,6 +28,8 @@
   $email = $_POST['email'];
   $other = $_POST['other'];
 
+  
+
   $to = 'tonysunyueran@gmail.com';
   $subject = 'Aliens Abducted Me - Abduction Report';
   $msg = "$name was abducted $when_it_happened and was gone for $how_long.\n" .
@@ -33,26 +39,23 @@
     "Fang spotted: $fang_spotted\n" .
     "Other comments: $other";
 
-  $mail = new PHPMailer(true);
-    //Server settings
-    $mail -> SMTPDebug=2;
-    $mail -> IsSMTP();
-    $mail -> Host='smtp.gmail.com';
-    $mail -> SMTPAuth=true;
-    $mail -> Username= 'tonysunyueran@gmail.com';
-    $mail -> Password= 'bierewo199274';
-    $mail -> SMTPSecure= 'tls';
-    $mail -> Port=587;
-    
+    $mail = new PHPMailer();
+    $mail->  SMTPDebug=2;
+    $mail ->  isSMTP();
+    $mail ->  Host='smtp.gmail.com';
+    $mail ->  SMTPAuth =true;
+    $mail ->  Username='tonysunyueran@gmail.com';
+    $mail ->  Password= 'bierewo199274';
+    $mail ->  SMTPSecure ='tls';
+    $mail ->  Port =587;
 
+    $mail ->  setFrom($to);
+    $mail ->  addAddress($to);
 
-    $mail -> setFrom($email);
-    $mail -> addReplyTo($email);
-    $mail -> addAddress($email);
-    $mail ->Subject=$subject;
-    
-    $mail -> Body=$msg;
-    $mail -> send();
+    $mail ->  addReplyTo($to);
+    $mail ->  Subject=$subject;
+    $mail ->  Body=$msg;
+    $mail ->  send();
   
  // mail($to, $subject, $msg, 'From:' . $email);
 
