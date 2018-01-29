@@ -10,7 +10,7 @@
 
 <?php
 
-  require './PHPMailer-FE_v4.11/_lib/class.phpmailer.php';
+  
   $name = $_POST['firstname'] . ' ' . $_POST['lastname'];
   $when_it_happened = $_POST['whenithappened'];
   $how_long = $_POST['howlong'];
